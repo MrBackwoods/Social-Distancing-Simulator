@@ -6,24 +6,31 @@ using UnityEngine.UI;
 // Script to show how long the simulation has been running as "days"
 public class DayCounter : MonoBehaviour
 {
-    public int i = 1;
+    public int dayPerSeconds = 4;
+    private Text text;
+    private int day = 1;
 
     void Start()
     {
+        text = GetComponent<Text>();
         StartCoroutine(ChangeTextCoroutine());
     }
 
     IEnumerator ChangeTextCoroutine()
     {
-        if (GetComponent<Text>() != null)
+        if (text != null)
         {
             while (true)
             {
 
-                GetComponent<Text>().text = "Day: " + i;
-                i++;
-                yield return new WaitForSeconds(4f);
+                text.text = "Day: " + day;
+                day++;
+                yield return new WaitForSeconds(dayPerSeconds);
             }
+        }
+        else
+        {
+            Debug.LogWarning("DayCounter: No Text component found.");
         }
     }
 }
