@@ -7,18 +7,22 @@ using UnityEngine.UI;
 // Resetting by reloading scene
 public class ResetButton : MonoBehaviour
 {
-    void Start()
+    void Awake()
     {
-        Button button = GetComponent<Button>();
+        Button btn = GetComponent<Button>();
 
-        if (button != null)
+        if (btn != null)
         {
-            button.onClick.AddListener(Reset);
+            btn.onClick.AddListener(Reset);
+        }
+        else
+        {
+            Debug.LogWarning("ResetButton: Button component is missing.");
         }
     }
 
     public void Reset()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

@@ -7,30 +7,33 @@ using UnityEngine.UI;
 public class DayCounter : MonoBehaviour
 {
     public int dayPerSeconds = 4;
-    private Text text;
+    private Text txt;
     private int day = 1;
 
-    void Start()
+    void Awake()
     {
-        text = GetComponent<Text>();
-        StartCoroutine(ChangeTextCoroutine());
+        txt = GetComponent<Text>();
+
+        if (txt == null)
+        {
+            Debug.LogWarning("DayCounter: No Text component found.");
+        }
+        else
+        {
+            StartCoroutine(ChangeTextCoroutine());
+        }
     }
 
     IEnumerator ChangeTextCoroutine()
     {
-        if (text != null)
+        if (txt != null)
         {
             while (true)
             {
-
-                text.text = "Day: " + day;
+                txt.text = "Day: " + day;
                 day++;
                 yield return new WaitForSeconds(dayPerSeconds);
             }
-        }
-        else
-        {
-            Debug.LogWarning("DayCounter: No Text component found.");
         }
     }
 }

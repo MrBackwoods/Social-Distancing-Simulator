@@ -8,16 +8,16 @@ public class DistancingButton : MonoBehaviour
 {
     public int distancingPercentage;
     public Text distancingText;
-    private Button button;
+    private Button btn;
     private GameObject[] objectsWithTag;
 
-    void Start()
+    void Awake()
     {
-        button = GetComponent<Button>();
+        btn = GetComponent<Button>();
 
-        if (button != null)
+        if (btn != null)
         {
-            button.onClick.AddListener(SetDistancing);
+            btn.onClick.AddListener(SetDistancing);
         }
         else
         {

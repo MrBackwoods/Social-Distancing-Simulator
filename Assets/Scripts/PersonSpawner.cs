@@ -7,7 +7,7 @@ public class PersonSpawner : MonoBehaviour
     public GameObject personPrefab;
     public int numberOfPersons = 200;
 
-    void Start()
+    void Awake()
     {
         SpawnPeople();
     }
@@ -34,6 +34,10 @@ public class PersonSpawner : MonoBehaviour
                     person.GetComponent<PersonHandler>().Infect();
                 }
             }
+        }
+        else
+        {
+            Debug.LogWarning("PersonSpawner: PersonPrefab or RectTransform component is missing.");
         }
     }
 }

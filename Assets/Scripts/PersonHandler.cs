@@ -9,10 +9,23 @@ public class PersonHandler : MonoBehaviour
     public bool isInfected = false;
     public float moveSpeed;
     Rigidbody2D rb;
+    SpriteRenderer sr;
 
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
+
+        if (rb == null)
+        {
+            Debug.LogWarning("PersonHandler: No Rigidbody2D component found.");
+        }
+
+        if (sr == null)
+        {
+            Debug.LogWarning("PersonHandler: No SpriteRenderer component found.");
+        }
+
         AddMotion();
     }
 
@@ -25,7 +38,7 @@ public class PersonHandler : MonoBehaviour
 
         if (!isInfected)
         {
-            PersonHandler otherPerson = collision.gameObject.GetComponent<PersonHandler>();
+            PersonHandler otherPerson = collision.gameObject?.GetComponent<PersonHandler>();
 
             if (otherPerson != null)
             {
@@ -69,10 +82,10 @@ public class PersonHandler : MonoBehaviour
 
     public void Infect()
     {
-        if (GetComponent<SpriteRenderer>() != null)
+        if (sr != null)
         {
             isInfected = true;
-            GetComponent<SpriteRenderer>().color = Color.red;
+            sr.color = Color.red;
         }
     }
 }
