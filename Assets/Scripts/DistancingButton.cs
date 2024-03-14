@@ -8,8 +8,8 @@ public class DistancingButton : MonoBehaviour
 {
     public int distancingPercentage;
     public Text distancingText;
-    Button button;
-    GameObject[] objectsWithTag;
+    private Button button;
+    private GameObject[] objectsWithTag;
 
     void Start()
     {
@@ -19,21 +19,28 @@ public class DistancingButton : MonoBehaviour
         {
             button.onClick.AddListener(SetDistancing);
         }
+        else
+        {
+            Debug.LogWarning("DistancingButton: No Button component found.");
+        }
     }
 
     public void SetDistancing()
     {
-        objectsWithTag = GameObject.FindGameObjectsWithTag("Person");
+        if (objectsWithTag == null)
+        {
+            objectsWithTag = GameObject.FindGameObjectsWithTag("Person");
+        }
 
         if (objectsWithTag != null && distancingText != null)
         {
-            int numObjectsToActOn = (int)((float)distancingPercentage / 100f * objectsWithTag.Length);
+            int distancingPersons = (int)((float)distancingPercentage / 100f * objectsWithTag.Length);
 
             distancingText.text = $"Distancing at {distancingPercentage} percent";
 
             for (int i = 0; i < objectsWithTag.Length; i++)
             {
-                if (i < numObjectsToActOn)
+                if (i < distancingPersons)
                 {
                     objectsWithTag[i].GetComponent<PersonHandler>().SetSocialDistancing(true);
                 }
@@ -43,6 +50,10 @@ public class DistancingButton : MonoBehaviour
                     objectsWithTag[i].GetComponent<PersonHandler>().SetSocialDistancing(false);
                 }
             }
+        }
+        else
+        {
+            Debug.LogWarning("DistancingButton: No person objects or Text component found.");
         }
     }
 }
